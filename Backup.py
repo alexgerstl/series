@@ -5,8 +5,8 @@ import msvcrt
 from filecmp import dircmp
 from termcolor import colored
 
-#target_dir = 'X:\\Serien'
-target_dir = 'C:\\Test'
+target_dir = 'X:\\Serien'
+#target_dir = 'C:\\Test'
 source_dir = 'F:\\Data\\Serien'
 source_root = [f.path for f in os.scandir(source_dir) if f.is_dir()]
 os.system('color')
@@ -134,6 +134,10 @@ def action_move(source, target, content):
             numCopied += 1
             p.calculateAndUpdate(numCopied, len(content))
             print()
+            print(colored("\n" + "Delete folder - (Y)es or (N)o? ", "yellow", "on_blue"))
+            action = msvcrt.getch()
+            if ord(action.lower()) == ord("y"):
+                shutil.rmtree(source)
         except:
             print(colored("Error while moving file: %s" % f, "red"))
 
@@ -149,7 +153,7 @@ if __name__ == "__main__":
 
     for _l in _p:
         _series, _season = get_series_season(_l)
-        print(colored(_series + " - " + _season + ": do Backup (B) or do Nothing (N)? ", "yellow", "on_blue"))
+        print(colored(_series + " - " + _season + ": do Backup (B) or do Nothing (N)? ", "yellow", "on_red"))
         _action = msvcrt.getch()
         if ord(_action.lower()) == ord("b"):
             create_backup_tree(_series, _season, target_dir)
